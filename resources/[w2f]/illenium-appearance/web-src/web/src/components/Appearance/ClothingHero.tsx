@@ -611,16 +611,20 @@ const categories = useMemo<Category[]>(() => {
     }
   }, []);
 
-  const handleCategoryPointerMove = useCallback(
-    (event: React.PointerEvent<HTMLDivElement>) => {
-      if (!categoryDrag.current.dragging || !categoryScrollRef.current) return;
-      const dx = event.clientX - categoryDrag.current.startX;
-      if (Math.abs(dx) > 8) suppressCategoryClick.current = true;
+const handleCategoryPointerMove = useCallback(
+  (event: React.PointerEvent<HTMLDivElement>) => {
+    if (!categoryDrag.current.dragging || !categoryScrollRef.current) return;
+
+    const dx = event.clientX - categoryDrag.current.startX;
+
+    if (Math.abs(dx) > DRAG_CLICK_THRESHOLD) {
+      suppressCategoryClick.current = true;
       categoryScrollRef.current.scrollLeft = categoryDrag.current.scroll0 - dx;
       updateCategoryScrollHints();
-    },
-    [updateCategoryScrollHints],
-  );
+    }
+  },
+  [updateCategoryScrollHints],
+);
 
   const handleCategoryPointerUpOrCancel = useCallback(
     (event: React.PointerEvent<HTMLDivElement>) => {
