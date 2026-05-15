@@ -88,7 +88,9 @@ const ScrollArrowRound = styled.button`
   line-height: 1;
   cursor: pointer;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.65);
-  transition: border-color 0.12s, color 0.12s;
+  transition:
+    border-color 0.12s,
+    color 0.12s;
 
   &:hover {
     border-color: rgba(239, 68, 68, 0.85);
@@ -146,7 +148,9 @@ const Pill = styled.button<PillProps>`
   text-transform: uppercase;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.65);
   cursor: pointer;
-  transition: color 0.12s, border-color 0.12s;
+  transition:
+    color 0.12s,
+    border-color 0.12s;
 
   &:hover {
     color: #fff;
@@ -176,7 +180,9 @@ const NavBtn = styled.button`
   line-height: 1;
   cursor: pointer;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.65);
-  transition: border-color 0.12s, color 0.12s;
+  transition:
+    border-color 0.12s,
+    color 0.12s;
 
   &:hover {
     border-color: rgba(239, 68, 68, 0.85);
@@ -222,11 +228,7 @@ const Card = styled.div<CardProps>`
   border-radius: 16px;
   border: 1px solid
     ${({ active, preview }) =>
-      active
-        ? 'rgba(239, 68, 68, 0.9)'
-        : preview
-          ? 'rgba(255, 255, 255, 0.22)'
-          : 'rgba(255, 255, 255, 0.1)'};
+      active ? 'rgba(239, 68, 68, 0.9)' : preview ? 'rgba(255, 255, 255, 0.22)' : 'rgba(255, 255, 255, 0.1)'};
   background: transparent;
   box-shadow: ${({ active }) =>
     active ? '0 0 34px rgba(239, 68, 68, 0.32), inset 0 0 0 1px rgba(239, 68, 68, 0.4)' : 'none'};
@@ -242,7 +244,10 @@ const Card = styled.div<CardProps>`
   user-select: none;
   transform: ${({ active }) => (active ? 'scale(1)' : 'scale(0.86)')};
   opacity: ${({ active }) => (active ? 1 : 0.65)};
-  transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1), opacity 220ms ease, border-color 0.12s,
+  transition:
+    transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 220ms ease,
+    border-color 0.12s,
     box-shadow 0.12s;
 
   small {
@@ -279,7 +284,9 @@ const Dot = styled.button<PillProps>`
   box-shadow: ${({ active }) => (active ? '0 0 14px rgba(239, 68, 68, 0.74)' : 'none')};
   cursor: pointer;
   padding: 0;
-  transition: background 0.12s, transform 0.12s;
+  transition:
+    background 0.12s,
+    transform 0.12s;
 
   &:hover {
     transform: scale(1.2);
@@ -312,8 +319,7 @@ const Slots = styled.div`
 const Slot = styled.button<PillProps>`
   height: 36px;
   border-radius: 10px;
-  border: 1px solid
-    ${({ active }) => (active ? 'rgba(239, 68, 68, 0.7)' : 'rgba(255, 255, 255, 0.14)')};
+  border: 1px solid ${({ active }) => (active ? 'rgba(239, 68, 68, 0.7)' : 'rgba(255, 255, 255, 0.14)')};
   background: transparent;
   color: ${({ active }) => (active ? '#fff' : 'rgba(240, 242, 248, 0.7)')};
   font-size: 11px;
@@ -321,7 +327,9 @@ const Slot = styled.button<PillProps>`
   letter-spacing: 0.08em;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.65);
   cursor: pointer;
-  transition: border-color 0.12s, color 0.12s;
+  transition:
+    border-color 0.12s,
+    color 0.12s;
 
   &:hover {
     color: #fff;
@@ -353,7 +361,10 @@ const Action = styled.button<{ tone?: 'primary' | 'ghost' | 'danger' }>`
   text-transform: uppercase;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
   cursor: pointer;
-  transition: color 0.12s, border-color 0.12s, box-shadow 0.12s;
+  transition:
+    color 0.12s,
+    border-color 0.12s,
+    box-shadow 0.12s;
 
   &:hover {
     color: #fff;
@@ -425,116 +436,116 @@ const ClothingHero = ({
   const compSettings = useMemo(() => componentSettingsById(componentSettings), [componentSettings]);
   const prSettings = useMemo(() => propSettingsById(propSettings), [propSettings]);
 
-const categories = useMemo<Category[]>(() => {
-  const all: Category[] = [
-    {
-      id: 'head',
-      title: 'Head',
-      type: 'component',
-      targetId: 0,
-      enabled: !isPedFreemodeModel,
-    },
-    {
-      id: 'mask',
-      title: 'Mask',
-      type: 'component',
-      targetId: 1,
-      enabled: isEnabled(componentConfig?.masks),
-    },
-    {
-      id: 'hair',
-      title: 'Hair',
-      type: 'hair',
-      enabled: true,
-    },
-    {
-      id: 'torso',
-      title: 'Torso',
-      type: 'component',
-      targetId: 11,
-      enabled: isEnabled(componentConfig?.jackets),
-    },
-    {
-      id: 'shirt',
-      title: 'Shirt',
-      type: 'component',
-      targetId: 8,
-      enabled: isEnabled(componentConfig?.shirts),
-    },
-    {
-      id: 'hands',
-      title: 'Hands',
-      type: 'component',
-      targetId: 3,
-      enabled: isEnabled(componentConfig?.upperBody),
-    },
-    {
-      id: 'legs',
-      title: 'Legs',
-      type: 'component',
-      targetId: 4,
-      enabled: isEnabled(componentConfig?.lowerBody),
-    },
-    {
-      id: 'shoes',
-      title: 'Shoes',
-      type: 'component',
-      targetId: 6,
-      enabled: isEnabled(componentConfig?.shoes),
-    },
-    {
-      id: 'bag',
-      title: 'Bag',
-      type: 'component',
-      targetId: 5,
-      enabled: isEnabled(componentConfig?.bags),
-    },
-    {
-      id: 'accessories',
-      title: 'Chains',
-      type: 'component',
-      targetId: 7,
-      enabled: isEnabled(componentConfig?.scarfAndChains) && !hasTracker,
-    },
-    {
-      id: 'hat',
-      title: 'Hat',
-      type: 'prop',
-      targetId: 0,
-      enabled: isEnabled(propConfig?.hats),
-    },
-    {
-      id: 'glasses',
-      title: 'Glasses',
-      type: 'prop',
-      targetId: 1,
-      enabled: isEnabled(propConfig?.glasses),
-    },
-    {
-      id: 'earrings',
-      title: 'Earrings',
-      type: 'prop',
-      targetId: 2,
-      enabled: isEnabled(propConfig?.ear),
-    },
-    {
-      id: 'watch',
-      title: 'Watch',
-      type: 'prop',
-      targetId: 6,
-      enabled: isEnabled(propConfig?.watches),
-    },
-    {
-      id: 'bracelet',
-      title: 'Bracelet',
-      type: 'prop',
-      targetId: 7,
-      enabled: isEnabled(propConfig?.bracelets),
-    },
-  ];
+  const categories = useMemo<Category[]>(() => {
+    const all: Category[] = [
+      {
+        id: 'head',
+        title: 'Head',
+        type: 'component',
+        targetId: 0,
+        enabled: !isPedFreemodeModel,
+      },
+      {
+        id: 'mask',
+        title: 'Mask',
+        type: 'component',
+        targetId: 1,
+        enabled: isEnabled(componentConfig?.masks),
+      },
+      {
+        id: 'hair',
+        title: 'Hair',
+        type: 'hair',
+        enabled: true,
+      },
+      {
+        id: 'torso',
+        title: 'Torso',
+        type: 'component',
+        targetId: 11,
+        enabled: isEnabled(componentConfig?.jackets),
+      },
+      {
+        id: 'shirt',
+        title: 'Shirt',
+        type: 'component',
+        targetId: 8,
+        enabled: isEnabled(componentConfig?.shirts),
+      },
+      {
+        id: 'hands',
+        title: 'Hands',
+        type: 'component',
+        targetId: 3,
+        enabled: isEnabled(componentConfig?.upperBody),
+      },
+      {
+        id: 'legs',
+        title: 'Legs',
+        type: 'component',
+        targetId: 4,
+        enabled: isEnabled(componentConfig?.lowerBody),
+      },
+      {
+        id: 'shoes',
+        title: 'Shoes',
+        type: 'component',
+        targetId: 6,
+        enabled: isEnabled(componentConfig?.shoes),
+      },
+      {
+        id: 'bag',
+        title: 'Bag',
+        type: 'component',
+        targetId: 5,
+        enabled: isEnabled(componentConfig?.bags),
+      },
+      {
+        id: 'accessories',
+        title: 'Chains',
+        type: 'component',
+        targetId: 7,
+        enabled: isEnabled(componentConfig?.scarfAndChains) && !hasTracker,
+      },
+      {
+        id: 'hat',
+        title: 'Hat',
+        type: 'prop',
+        targetId: 0,
+        enabled: isEnabled(propConfig?.hats),
+      },
+      {
+        id: 'glasses',
+        title: 'Glasses',
+        type: 'prop',
+        targetId: 1,
+        enabled: isEnabled(propConfig?.glasses),
+      },
+      {
+        id: 'earrings',
+        title: 'Earrings',
+        type: 'prop',
+        targetId: 2,
+        enabled: isEnabled(propConfig?.ear),
+      },
+      {
+        id: 'watch',
+        title: 'Watch',
+        type: 'prop',
+        targetId: 6,
+        enabled: isEnabled(propConfig?.watches),
+      },
+      {
+        id: 'bracelet',
+        title: 'Bracelet',
+        type: 'prop',
+        targetId: 7,
+        enabled: isEnabled(propConfig?.bracelets),
+      },
+    ];
 
-  return all.filter(category => category.enabled);
-}, [componentConfig, propConfig, hasTracker, isPedFreemodeModel]);
+    return all.filter(category => category.enabled);
+  }, [componentConfig, propConfig, hasTracker, isPedFreemodeModel]);
 
   const [activeId, setActiveId] = useState(categories[0]?.id ?? 'hair');
   const activeCategory = categories.find(c => c.id === activeId) || categories[0];
@@ -611,50 +622,50 @@ const categories = useMemo<Category[]>(() => {
     }
   }, []);
 
-const handleCategoryPointerMove = useCallback(
-  (event: React.PointerEvent<HTMLDivElement>) => {
-    if (!categoryDrag.current.dragging || !categoryScrollRef.current) return;
+  const handleCategoryPointerMove = useCallback(
+    (event: React.PointerEvent<HTMLDivElement>) => {
+      if (!categoryDrag.current.dragging || !categoryScrollRef.current) return;
 
-    const dx = event.clientX - categoryDrag.current.startX;
+      const dx = event.clientX - categoryDrag.current.startX;
 
-    if (Math.abs(dx) > DRAG_CLICK_THRESHOLD) {
-      suppressCategoryClick.current = true;
-      categoryScrollRef.current.scrollLeft = categoryDrag.current.scroll0 - dx;
-      updateCategoryScrollHints();
-    }
-  },
-  [updateCategoryScrollHints],
-);
+      if (Math.abs(dx) > DRAG_CLICK_THRESHOLD) {
+        suppressCategoryClick.current = true;
+        categoryScrollRef.current.scrollLeft = categoryDrag.current.scroll0 - dx;
+        updateCategoryScrollHints();
+      }
+    },
+    [updateCategoryScrollHints],
+  );
 
   const handleCategoryPointerUpOrCancel = useCallback(
-  (event: React.PointerEvent<HTMLDivElement>) => {
-    if (!categoryDrag.current.dragging) return;
-    if (categoryDrag.current.pointerId !== event.pointerId) return;
+    (event: React.PointerEvent<HTMLDivElement>) => {
+      if (!categoryDrag.current.dragging) return;
+      if (categoryDrag.current.pointerId !== event.pointerId) return;
 
+      categoryDrag.current.dragging = false;
+      setCategoryBarDragging(false);
+
+      try {
+        categoryScrollRef.current?.releasePointerCapture(event.pointerId);
+      } catch {
+        /* noop */
+      }
+
+      updateCategoryScrollHints();
+
+      window.setTimeout(() => {
+        suppressCategoryClick.current = false;
+      }, 0);
+    },
+    [updateCategoryScrollHints],
+  );
+
+  const handleLostCategoryPointerCapture = useCallback(() => {
     categoryDrag.current.dragging = false;
+    suppressCategoryClick.current = false;
     setCategoryBarDragging(false);
-
-    try {
-      categoryScrollRef.current?.releasePointerCapture(event.pointerId);
-    } catch {
-      /* noop */
-    }
-
     updateCategoryScrollHints();
-
-    window.setTimeout(() => {
-      suppressCategoryClick.current = false;
-    }, 0);
-  },
-  [updateCategoryScrollHints],
-);
-
-const handleLostCategoryPointerCapture = useCallback(() => {
-  categoryDrag.current.dragging = false;
-  suppressCategoryClick.current = false;
-  setCategoryBarDragging(false);
-  updateCategoryScrollHints();
-}, [updateCategoryScrollHints]);
+  }, [updateCategoryScrollHints]);
 
   // Drag state for the carousel.
   const stripRef = useRef<HTMLDivElement>(null);
@@ -663,144 +674,120 @@ const handleLostCategoryPointerCapture = useCallback(() => {
   const [offset, setOffset] = useState(0);
   const [animating, setAnimating] = useState(true);
 
-const currentDrawable = useCallback(
-  (category: Category) => {
-    if (category.type === 'hair') return safeNumber(data?.hair?.style, 0);
+  const currentDrawable = useCallback(
+    (category: Category) => {
+      if (category.type === 'hair') return safeNumber(data?.hair?.style, 0);
 
-    if (category.type === 'component' && category.targetId !== undefined) {
-      return safeNumber(componentData[category.targetId]?.drawable, 0);
-    }
-
-    if (category.type === 'prop' && category.targetId !== undefined) {
-      return safeNumber(propData[category.targetId]?.drawable, -1);
-    }
-
-    return 0;
-  },
-  [componentData, propData, data?.hair?.style],
-);
-
-const currentTexture = useCallback(
-  (category: Category) => {
-    if (category.type === 'hair') return safeNumber(data?.hair?.texture, 0);
-
-    if (category.type === 'component' && category.targetId !== undefined) {
-      return safeNumber(componentData[category.targetId]?.texture, 0);
-    }
-
-    if (category.type === 'prop' && category.targetId !== undefined) {
-      return safeNumber(propData[category.targetId]?.texture, 0);
-    }
-
-    return 0;
-  },
-  [componentData, propData, data?.hair?.texture],
-);
-
-const drawableRange = useCallback(
-  (category: Category): number[] => {
-    const current = currentDrawable(category);
-
-    if (category.type === 'hair') {
-      return safeRange(hairSettings?.style?.min ?? current, hairSettings?.style?.max ?? current);
-    }
-
-    if (category.type === 'component' && category.targetId !== undefined) {
-      const settings = compSettings[category.targetId];
-
-      if (!settings?.drawable) {
-        return [current];
+      if (category.type === 'component' && category.targetId !== undefined) {
+        return safeNumber(componentData[category.targetId]?.drawable, 0);
       }
 
-      return safeRange(settings.drawable.min ?? current, settings.drawable.max ?? current);
-    }
-
-    if (category.type === 'prop' && category.targetId !== undefined) {
-      const settings = prSettings[category.targetId];
-
-      if (!settings?.drawable) {
-        return [current];
+      if (category.type === 'prop' && category.targetId !== undefined) {
+        return safeNumber(propData[category.targetId]?.drawable, -1);
       }
 
-      return safeRange(settings.drawable.min ?? current, settings.drawable.max ?? current);
-    }
-
-    return [current];
-  },
-  [compSettings, prSettings, hairSettings, currentDrawable],
-);
-
-const textureRange = useCallback(
-  (category: Category): number[] => {
-    const current = currentTexture(category);
-
-    if (category.type === 'hair') {
-      return safeRange(0, hairSettings?.texture?.max ?? current);
-    }
-
-    if (category.type === 'component' && category.targetId !== undefined) {
-      const settings = compSettings[category.targetId];
-
-      if (!settings?.texture) {
-        return [current];
-      }
-
-      return safeRange(0, settings.texture.max ?? current);
-    }
-
-    if (category.type === 'prop' && category.targetId !== undefined) {
-      const settings = prSettings[category.targetId];
-
-      if (!settings?.texture) {
-        return [current];
-      }
-
-      return safeRange(0, settings.texture.max ?? current);
-    }
-
-    return [current];
-  },
-  [compSettings, prSettings, hairSettings, currentTexture],
-);
+      return 0;
+    },
+    [componentData, propData, data?.hair?.style],
+  );
 
   const currentTexture = useCallback(
     (category: Category) => {
-      if (category.type === 'hair') return data.hair.texture;
-      if (category.type === 'component' && category.targetId !== undefined) return componentData[category.targetId]?.texture ?? 0;
-      if (category.type === 'prop' && category.targetId !== undefined) return propData[category.targetId]?.texture ?? 0;
+      if (category.type === 'hair') return safeNumber(data?.hair?.texture, 0);
+
+      if (category.type === 'component' && category.targetId !== undefined) {
+        return safeNumber(componentData[category.targetId]?.texture, 0);
+      }
+
+      if (category.type === 'prop' && category.targetId !== undefined) {
+        return safeNumber(propData[category.targetId]?.texture, 0);
+      }
+
       return 0;
     },
-    [componentData, propData, data.hair.texture],
+    [componentData, propData, data?.hair?.texture],
+  );
+
+  const drawableRange = useCallback(
+    (category: Category): number[] => {
+      const current = currentDrawable(category);
+
+      if (category.type === 'hair') {
+        return safeRange(hairSettings?.style?.min ?? current, hairSettings?.style?.max ?? current);
+      }
+
+      if (category.type === 'component' && category.targetId !== undefined) {
+        const settings = compSettings[category.targetId];
+
+        if (!settings?.drawable) {
+          return [current];
+        }
+
+        return safeRange(settings.drawable.min ?? current, settings.drawable.max ?? current);
+      }
+
+      if (category.type === 'prop' && category.targetId !== undefined) {
+        const settings = prSettings[category.targetId];
+
+        if (!settings?.drawable) {
+          return [current];
+        }
+
+        return safeRange(settings.drawable.min ?? current, settings.drawable.max ?? current);
+      }
+
+      return [current];
+    },
+    [compSettings, prSettings, hairSettings, currentDrawable],
   );
 
   const textureRange = useCallback(
-    (category: Category, drawable: number): number[] => {
+    (category: Category): number[] => {
+      const current = currentTexture(category);
+
       if (category.type === 'hair') {
-        return safeRange(0, hairSettings?.texture?.max ?? 0);
+        return safeRange(0, hairSettings?.texture?.max ?? current);
       }
+
       if (category.type === 'component' && category.targetId !== undefined) {
         const settings = compSettings[category.targetId];
-        return safeRange(0, settings?.texture.max ?? 0);
+
+        if (!settings?.texture) {
+          return [current];
+        }
+
+        return safeRange(0, settings.texture.max ?? current);
       }
+
       if (category.type === 'prop' && category.targetId !== undefined) {
         const settings = prSettings[category.targetId];
-        return safeRange(0, settings?.texture.max ?? 0);
+
+        if (!settings?.texture) {
+          return [current];
+        }
+
+        return safeRange(0, settings.texture.max ?? current);
       }
-      return [drawable];
+
+      return [current];
     },
-    [compSettings, prSettings, hairSettings],
+    [compSettings, prSettings, hairSettings, currentTexture],
   );
 
   const changeDrawable = (category: Category, drawable: number) => {
     if (category.type === 'hair') handleHairChange('style', drawable);
-    if (category.type === 'component' && category.targetId !== undefined) handleComponentDrawableChange(category.targetId, drawable);
-    if (category.type === 'prop' && category.targetId !== undefined) handlePropDrawableChange(category.targetId, drawable);
+    if (category.type === 'component' && category.targetId !== undefined)
+      handleComponentDrawableChange(category.targetId, drawable);
+    if (category.type === 'prop' && category.targetId !== undefined)
+      handlePropDrawableChange(category.targetId, drawable);
   };
 
   const changeTexture = (category: Category, texture: number) => {
     if (category.type === 'hair') handleHairChange('texture', texture);
-    if (category.type === 'component' && category.targetId !== undefined) handleComponentTextureChange(category.targetId, texture);
-    if (category.type === 'prop' && category.targetId !== undefined) handlePropTextureChange(category.targetId, texture);
+    if (category.type === 'component' && category.targetId !== undefined)
+      handleComponentTextureChange(category.targetId, texture);
+    if (category.type === 'prop' && category.targetId !== undefined)
+      handlePropTextureChange(category.targetId, texture);
   };
 
   // Sync strip offset with the actual current drawable each time the active category changes.
@@ -875,7 +862,7 @@ const textureRange = useCallback(
 
   if (!activeCategory) return null;
 
-const textures = textureRange(activeCategory);
+  const textures = textureRange(activeCategory);
   const activeTexture = currentTexture(activeCategory);
 
   return (
@@ -915,10 +902,10 @@ const textures = textureRange(activeCategory);
                 if (suppressCategoryClick.current) {
                   suppressCategoryClick.current = false;
                   return;
-  }
+                }
 
-  setActiveId(category.id);
-}}
+                setActiveId(category.id);
+              }}
             >
               {category.title}
             </Pill>
