@@ -425,32 +425,116 @@ const ClothingHero = ({
   const compSettings = useMemo(() => componentSettingsById(componentSettings), [componentSettings]);
   const prSettings = useMemo(() => propSettingsById(propSettings), [propSettings]);
 
-  const categories = useMemo<Category[]>(() => {
-    const all: Category[] = [
-      { id: 'head', title: 'Head', type: 'component', targetId: 0, enabled: !isPedFreemodeModel },
-      { id: 'mask', title: 'Mask', type: 'component', targetId: 1, enabled: componentConfig.masks },
-      { id: 'hair', title: 'Hair', type: 'hair', enabled: true },
-      { id: 'torso', title: 'Torso', type: 'component', targetId: 11, enabled: componentConfig.jackets },
-      { id: 'shirt', title: 'Shirt', type: 'component', targetId: 8, enabled: componentConfig.shirts },
-      { id: 'hands', title: 'Hands', type: 'component', targetId: 3, enabled: componentConfig.upperBody },
-      { id: 'legs', title: 'Legs', type: 'component', targetId: 4, enabled: componentConfig.lowerBody },
-      { id: 'shoes', title: 'Shoes', type: 'component', targetId: 6, enabled: componentConfig.shoes },
-      { id: 'bag', title: 'Bag', type: 'component', targetId: 5, enabled: componentConfig.bags },
-      {
-        id: 'accessories',
-        title: 'Chains',
-        type: 'component',
-        targetId: 7,
-        enabled: componentConfig.scarfAndChains && !hasTracker,
-      },
-      { id: 'hat', title: 'Hat', type: 'prop', targetId: 0, enabled: propConfig.hats },
-      { id: 'glasses', title: 'Glasses', type: 'prop', targetId: 1, enabled: propConfig.glasses },
-      { id: 'earrings', title: 'Earrings', type: 'prop', targetId: 2, enabled: propConfig.ear },
-      { id: 'watch', title: 'Watch', type: 'prop', targetId: 6, enabled: propConfig.watches },
-      { id: 'bracelet', title: 'Bracelet', type: 'prop', targetId: 7, enabled: propConfig.bracelets },
-    ];
-    return all.filter(c => c.enabled);
-  }, [componentConfig, propConfig, hasTracker, isPedFreemodeModel]);
+const categories = useMemo<Category[]>(() => {
+  const all: Category[] = [
+    {
+      id: 'head',
+      title: 'Head',
+      type: 'component',
+      targetId: 0,
+      enabled: !isPedFreemodeModel,
+    },
+    {
+      id: 'mask',
+      title: 'Mask',
+      type: 'component',
+      targetId: 1,
+      enabled: isEnabled(componentConfig?.masks),
+    },
+    {
+      id: 'hair',
+      title: 'Hair',
+      type: 'hair',
+      enabled: true,
+    },
+    {
+      id: 'torso',
+      title: 'Torso',
+      type: 'component',
+      targetId: 11,
+      enabled: isEnabled(componentConfig?.jackets),
+    },
+    {
+      id: 'shirt',
+      title: 'Shirt',
+      type: 'component',
+      targetId: 8,
+      enabled: isEnabled(componentConfig?.shirts),
+    },
+    {
+      id: 'hands',
+      title: 'Hands',
+      type: 'component',
+      targetId: 3,
+      enabled: isEnabled(componentConfig?.upperBody),
+    },
+    {
+      id: 'legs',
+      title: 'Legs',
+      type: 'component',
+      targetId: 4,
+      enabled: isEnabled(componentConfig?.lowerBody),
+    },
+    {
+      id: 'shoes',
+      title: 'Shoes',
+      type: 'component',
+      targetId: 6,
+      enabled: isEnabled(componentConfig?.shoes),
+    },
+    {
+      id: 'bag',
+      title: 'Bag',
+      type: 'component',
+      targetId: 5,
+      enabled: isEnabled(componentConfig?.bags),
+    },
+    {
+      id: 'accessories',
+      title: 'Chains',
+      type: 'component',
+      targetId: 7,
+      enabled: isEnabled(componentConfig?.scarfAndChains) && !hasTracker,
+    },
+    {
+      id: 'hat',
+      title: 'Hat',
+      type: 'prop',
+      targetId: 0,
+      enabled: isEnabled(propConfig?.hats),
+    },
+    {
+      id: 'glasses',
+      title: 'Glasses',
+      type: 'prop',
+      targetId: 1,
+      enabled: isEnabled(propConfig?.glasses),
+    },
+    {
+      id: 'earrings',
+      title: 'Earrings',
+      type: 'prop',
+      targetId: 2,
+      enabled: isEnabled(propConfig?.ear),
+    },
+    {
+      id: 'watch',
+      title: 'Watch',
+      type: 'prop',
+      targetId: 6,
+      enabled: isEnabled(propConfig?.watches),
+    },
+    {
+      id: 'bracelet',
+      title: 'Bracelet',
+      type: 'prop',
+      targetId: 7,
+      enabled: isEnabled(propConfig?.bracelets),
+    },
+  ];
+
+  return all.filter(category => category.enabled);
+}, [componentConfig, propConfig, hasTracker, isPedFreemodeModel]);
 
   const [activeId, setActiveId] = useState(categories[0]?.id ?? 'hair');
   const activeCategory = categories.find(c => c.id === activeId) || categories[0];
