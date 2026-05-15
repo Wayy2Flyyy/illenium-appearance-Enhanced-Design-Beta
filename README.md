@@ -1,4 +1,4 @@
-# illenium-appearance Enhanced Design Beta
+# illenium-appearance Enhanced Design (Beta)
 
 **illenium-appearance Enhanced Design** is a premium **W2F-style redesign** of the standard FiveM clothing menu, built with a cleaner layout, smoother navigation, sharper character preview, and a more polished customization flow for serious roleplay servers.
 
