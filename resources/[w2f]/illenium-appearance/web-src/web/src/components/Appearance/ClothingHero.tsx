@@ -649,11 +649,12 @@ const handleCategoryPointerMove = useCallback(
   [updateCategoryScrollHints],
 );
 
-  const handleLostCategoryPointerCapture = useCallback(() => {
-    categoryDrag.current.dragging = false;
-    setCategoryBarDragging(false);
-    updateCategoryScrollHints();
-  }, [updateCategoryScrollHints]);
+const handleLostCategoryPointerCapture = useCallback(() => {
+  categoryDrag.current.dragging = false;
+  suppressCategoryClick.current = false;
+  setCategoryBarDragging(false);
+  updateCategoryScrollHints();
+}, [updateCategoryScrollHints]);
 
   // Drag state for the carousel.
   const stripRef = useRef<HTMLDivElement>(null);
