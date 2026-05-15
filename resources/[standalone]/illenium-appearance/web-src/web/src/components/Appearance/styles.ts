@@ -26,9 +26,9 @@ export const Container = styled.div`
 
   padding: 28px 12px 28px 24px;
 
-  background:
-    linear-gradient(90deg, rgba(5, 5, 7, 0.58), rgba(5, 5, 7, 0.28) 76%, rgba(5, 5, 7, 0));
-  backdrop-filter: blur(10px);
+  /* Fully transparent scroller strip so the ped / world stays visible behind the menu */
+  background: transparent;
+  backdrop-filter: none;
 
   overflow-y: scroll;
 

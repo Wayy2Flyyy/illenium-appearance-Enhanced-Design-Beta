@@ -41,31 +41,26 @@ const Header = styled.div<HeaderProps>`
 
   z-index: 2;
 
-  border: 1px solid rgba(255, 255, 255, ${({ active }) => (active ? '0.2' : '0.1')});
-  background:
-    linear-gradient(135deg, rgba(${props => props.theme.primaryBackground || '192, 28, 40'}, ${({ active }) => (active ? '0.24' : '0.06')}), rgba(${props => props.theme.secondaryBackground || '10, 10, 12'}, 0.42));
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
-  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, ${({ active }) => (active ? '0.28' : '0.14')});
+  background: rgba(0, 0, 0, ${({ active }) => (active ? '0.12' : '0')});
+  box-shadow: none;
+  backdrop-filter: none;
 
-  transition: background 0.1s;
+  transition: background 0.12s, border-color 0.12s;
 
   &:hover {
-    background:
-      linear-gradient(135deg, rgba(${props => props.theme.primaryBackground || '192, 28, 40'}, 0.3), rgba(${props => props.theme.secondaryBackground || '10, 10, 12'}, 0.5));
-    transition: background 0.12s, border-color 0.12s;
-    border-color: rgba(${props => props.theme.primaryBackground || '192, 28, 40'}, 0.65);
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(${props => props.theme.primaryBackground || '192, 28, 40'}, 0.45);
     cursor: pointer;
   }
 
   ${({ active }) =>
     active &&
     css`
-      background:
-        linear-gradient(135deg, rgba(${props => props.theme.primaryBackground || '192, 28, 40'}, 0.34), rgba(${props => props.theme.secondaryBackground || '10, 10, 12'}, 0.52));
+      background: rgba(${props => props.theme.primaryBackground || '192, 28, 40'}, 0.1);
       &:hover {
         ${props => props.theme.smoothBackgroundTransition ? 'transition: background 0.2s;' : ''}
-        background:
-          linear-gradient(135deg, rgba(${props => props.theme.primaryBackground || '192, 28, 40'}, 0.4), rgba(${props => props.theme.secondaryBackground || '10, 10, 12'}, 0.58));
+        background: rgba(${props => props.theme.primaryBackground || '192, 28, 40'}, 0.14);
       }
     `}
 

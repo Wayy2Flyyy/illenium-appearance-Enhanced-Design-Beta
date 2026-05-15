@@ -125,29 +125,24 @@ Error generating stack: `+i.message+`
 
   z-index: 2;
 
-  border: 1px solid rgba(255, 255, 255, ${({active:e})=>e?"0.2":"0.1"});
-  background:
-    linear-gradient(135deg, rgba(${e=>e.theme.primaryBackground||"192, 28, 40"}, ${({active:e})=>e?"0.24":"0.06"}), rgba(${e=>e.theme.secondaryBackground||"10, 10, 12"}, 0.42));
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
-  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, ${({active:e})=>e?"0.28":"0.14"});
+  background: rgba(0, 0, 0, ${({active:e})=>e?"0.12":"0"});
+  box-shadow: none;
+  backdrop-filter: none;
 
-  transition: background 0.1s;
+  transition: background 0.12s, border-color 0.12s;
 
   &:hover {
-    background:
-      linear-gradient(135deg, rgba(${e=>e.theme.primaryBackground||"192, 28, 40"}, 0.3), rgba(${e=>e.theme.secondaryBackground||"10, 10, 12"}, 0.5));
-    transition: background 0.12s, border-color 0.12s;
-    border-color: rgba(${e=>e.theme.primaryBackground||"192, 28, 40"}, 0.65);
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(${e=>e.theme.primaryBackground||"192, 28, 40"}, 0.45);
     cursor: pointer;
   }
 
   ${({active:e})=>e&&rr`
-      background:
-        linear-gradient(135deg, rgba(${t=>t.theme.primaryBackground||"192, 28, 40"}, 0.34), rgba(${t=>t.theme.secondaryBackground||"10, 10, 12"}, 0.52));
+      background: rgba(${t=>t.theme.primaryBackground||"192, 28, 40"}, 0.1);
       &:hover {
         ${t=>t.theme.smoothBackgroundTransition?"transition: background 0.2s;":""}
-        background:
-          linear-gradient(135deg, rgba(${t=>t.theme.primaryBackground||"192, 28, 40"}, 0.4), rgba(${t=>t.theme.secondaryBackground||"10, 10, 12"}, 0.58));
+        background: rgba(${t=>t.theme.primaryBackground||"192, 28, 40"}, 0.14);
       }
     `}
 
@@ -644,9 +639,9 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
 
   padding: 28px 12px 28px 24px;
 
-  background:
-    linear-gradient(90deg, rgba(5, 5, 7, 0.58), rgba(5, 5, 7, 0.28) 76%, rgba(5, 5, 7, 0));
-  backdrop-filter: blur(10px);
+  /* Fully transparent scroller strip so the ped / world stays visible behind the menu */
+  background: transparent;
+  backdrop-filter: none;
 
   overflow-y: scroll;
 
