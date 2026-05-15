@@ -841,9 +841,10 @@ const handleLostCategoryPointerCapture = useCallback(() => {
                 if (suppressCategoryClick.current) {
                   suppressCategoryClick.current = false;
                   return;
-                }
-                setActiveId(category.id);
-              }}
+  }
+
+  setActiveId(category.id);
+}}
             >
               {category.title}
             </Pill>
