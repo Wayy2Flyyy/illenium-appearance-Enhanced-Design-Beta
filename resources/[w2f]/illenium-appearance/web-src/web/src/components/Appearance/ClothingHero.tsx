@@ -627,21 +627,27 @@ const handleCategoryPointerMove = useCallback(
 );
 
   const handleCategoryPointerUpOrCancel = useCallback(
-    (event: React.PointerEvent<HTMLDivElement>) => {
-      if (!categoryDrag.current.dragging) return;
-      if (categoryDrag.current.pointerId !== event.pointerId) return;
+  (event: React.PointerEvent<HTMLDivElement>) => {
+    if (!categoryDrag.current.dragging) return;
+    if (categoryDrag.current.pointerId !== event.pointerId) return;
 
-      categoryDrag.current.dragging = false;
-      setCategoryBarDragging(false);
-      try {
-        categoryScrollRef.current?.releasePointerCapture(event.pointerId);
-      } catch {
-        /* noop */
-      }
-      updateCategoryScrollHints();
-    },
-    [updateCategoryScrollHints],
-  );
+    categoryDrag.current.dragging = false;
+    setCategoryBarDragging(false);
+
+    try {
+      categoryScrollRef.current?.releasePointerCapture(event.pointerId);
+    } catch {
+      /* noop */
+    }
+
+    updateCategoryScrollHints();
+
+    window.setTimeout(() => {
+      suppressCategoryClick.current = false;
+    }, 0);
+  },
+  [updateCategoryScrollHints],
+);
 
   const handleLostCategoryPointerCapture = useCallback(() => {
     categoryDrag.current.dragging = false;
