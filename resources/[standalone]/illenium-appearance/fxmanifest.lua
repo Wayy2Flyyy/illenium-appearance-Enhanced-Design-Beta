@@ -8,8 +8,11 @@ version "v5.7.0"
 
 lua54 "yes"
 
+-- Do not declare ox_lib 'locale': this resource ships Lua locales (e.g. locales/en.lua via NUI),
+-- not locales/*.json files; declaring locale makes ox_lib warn about missing locales/en.json.
+
 dependencies {
-    "ox_lib",
+    'ox_lib',
 }
 
 client_scripts {
