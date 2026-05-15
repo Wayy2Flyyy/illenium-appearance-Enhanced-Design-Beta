@@ -31,4 +31,4 @@ More updates, improvements, and polish will be added over time.
 
 ---
 
-*Stay2Flyyy xx*
+*Stay2Flyyy xoxo*
