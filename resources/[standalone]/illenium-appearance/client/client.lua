@@ -259,6 +259,7 @@ RegisterNetEvent("illenium-appearance:client:saveOutfit", function()
     if outfitName then
         Wait(500)
         lib.callback("illenium-appearance:server:getOutfits", false, function(outfits)
+            outfits = outfits or {}
             local outfitExists = false
             for i = 1, #outfits, 1 do
                 if outfits[i].name:lower() == outfitName:lower() then
@@ -290,6 +291,7 @@ RegisterNetEvent('illenium-appearance:client:updateOutfit', function(outfitID)
     if not outfitID then return end
 
     lib.callback("illenium-appearance:server:getOutfits", false, function(outfits)
+        outfits = outfits or {}
         local outfitExists = false
         for i = 1, #outfits, 1 do
             if outfits[i].id == outfitID then
@@ -317,6 +319,7 @@ RegisterNetEvent('illenium-appearance:client:updateOutfit', function(outfitID)
 end)
 
 local function RegisterChangeOutfitMenu(id, parent, outfits, mType)
+    outfits = outfits or {}
     local changeOutfitMenu = {
         id = id,
         title = _L("outfits.change.title"),
@@ -347,6 +350,7 @@ local function RegisterChangeOutfitMenu(id, parent, outfits, mType)
 end
 
 local function RegisterUpdateOutfitMenu(id, parent, outfits)
+    outfits = outfits or {}
     local updateOutfitMenu = {
         id = id,
         title = _L("outfits.update.title"),
@@ -370,6 +374,7 @@ local function RegisterUpdateOutfitMenu(id, parent, outfits)
 end
 
 local function RegisterGenerateOutfitCodeMenu(id, parent, outfits)
+    outfits = outfits or {}
     local generateOutfitCodeMenu = {
         id = id,
         title = _L("outfits.generate.title"),
@@ -389,6 +394,7 @@ local function RegisterGenerateOutfitCodeMenu(id, parent, outfits)
 end
 
 local function RegisterDeleteOutfitMenu(id, parent, outfits, deleteEvent)
+    outfits = outfits or {}
     local deleteOutfitMenu = {
         id = id,
         title = _L("outfits.delete.title"),

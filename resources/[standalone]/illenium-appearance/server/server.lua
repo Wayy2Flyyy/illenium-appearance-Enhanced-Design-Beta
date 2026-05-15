@@ -18,7 +18,7 @@ end
 
 local function getOutfitsForPlayer(citizenid)
     outfitCache[citizenid] = {}
-    local result = Database.PlayerOutfits.GetAllByCitizenID(citizenid)
+    local result = Database.PlayerOutfits.GetAllByCitizenID(citizenid) or {}
     for i = 1, #result, 1 do
         outfitCache[citizenid][#outfitCache[citizenid] + 1] = {
             id = result[i].id,
@@ -130,7 +130,7 @@ lib.callback.register("illenium-appearance:server:getOutfits", function(source)
     if outfitCache[citizenID] == nil then
         getOutfitsForPlayer(citizenID)
     end
-    return outfitCache[citizenID]
+    return outfitCache[citizenID] or {}
 end)
 
 lib.callback.register("illenium-appearance:server:getManagementOutfits", function(source, mType, gender)
