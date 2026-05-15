@@ -875,7 +875,7 @@ const textureRange = useCallback(
 
   if (!activeCategory) return null;
 
-  const textures = textureRange(activeCategory, currentDrawable(activeCategory));
+const textures = textureRange(activeCategory);
   const activeTexture = currentTexture(activeCategory);
 
   return (
