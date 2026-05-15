@@ -5,3 +5,5 @@ FiveM player appearance and clothing customization. See **install.md** for drag-
 Requires **ox_lib** and **oxmysql** (with MySQL configured). Prebuilt NUI is included under `web/dist`.
 
 **Credits:** upstream [illenium-appearance](https://github.com/iLLeniumStudios/illenium-appearance) (snakewiz & iLLeniumStudios); W2F UI and integration fork.
+
+**Update (15 May 2026):** clothing category compatibility repair (click reliability, safer config/range fallbacks, rebuilt NUI). Details, install/update steps, developer build note, and troubleshooting: **[install.md](install.md)**.
