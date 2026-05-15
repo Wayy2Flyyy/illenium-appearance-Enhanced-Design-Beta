@@ -663,31 +663,105 @@ const handleLostCategoryPointerCapture = useCallback(() => {
   const [offset, setOffset] = useState(0);
   const [animating, setAnimating] = useState(true);
 
-  const drawableRange = useCallback(
-    (category: Category): number[] => {
-      if (category.type === 'hair') return safeRange(hairSettings?.style?.min ?? 0, hairSettings?.style?.max ?? 0);
-      if (category.type === 'component' && category.targetId !== undefined) {
-        const settings = compSettings[category.targetId];
-        return safeRange(settings?.drawable.min ?? 0, settings?.drawable.max ?? 0);
-      }
-      if (category.type === 'prop' && category.targetId !== undefined) {
-        const settings = prSettings[category.targetId];
-        return safeRange(settings?.drawable.min ?? -1, settings?.drawable.max ?? -1);
-      }
-      return [];
-    },
-    [compSettings, prSettings, hairSettings],
-  );
+const currentDrawable = useCallback(
+  (category: Category) => {
+    if (category.type === 'hair') return safeNumber(data?.hair?.style, 0);
 
-  const currentDrawable = useCallback(
-    (category: Category) => {
-      if (category.type === 'hair') return data.hair.style;
-      if (category.type === 'component' && category.targetId !== undefined) return componentData[category.targetId]?.drawable ?? 0;
-      if (category.type === 'prop' && category.targetId !== undefined) return propData[category.targetId]?.drawable ?? 0;
-      return 0;
-    },
-    [componentData, propData, data.hair.style],
-  );
+    if (category.type === 'component' && category.targetId !== undefined) {
+      return safeNumber(componentData[category.targetId]?.drawable, 0);
+    }
+
+    if (category.type === 'prop' && category.targetId !== undefined) {
+      return safeNumber(propData[category.targetId]?.drawable, -1);
+    }
+
+    return 0;
+  },
+  [componentData, propData, data?.hair?.style],
+);
+
+const currentTexture = useCallback(
+  (category: Category) => {
+    if (category.type === 'hair') return safeNumber(data?.hair?.texture, 0);
+
+    if (category.type === 'component' && category.targetId !== undefined) {
+      return safeNumber(componentData[category.targetId]?.texture, 0);
+    }
+
+    if (category.type === 'prop' && category.targetId !== undefined) {
+      return safeNumber(propData[category.targetId]?.texture, 0);
+    }
+
+    return 0;
+  },
+  [componentData, propData, data?.hair?.texture],
+);
+
+const drawableRange = useCallback(
+  (category: Category): number[] => {
+    const current = currentDrawable(category);
+
+    if (category.type === 'hair') {
+      return safeRange(hairSettings?.style?.min ?? current, hairSettings?.style?.max ?? current);
+    }
+
+    if (category.type === 'component' && category.targetId !== undefined) {
+      const settings = compSettings[category.targetId];
+
+      if (!settings?.drawable) {
+        return [current];
+      }
+
+      return safeRange(settings.drawable.min ?? current, settings.drawable.max ?? current);
+    }
+
+    if (category.type === 'prop' && category.targetId !== undefined) {
+      const settings = prSettings[category.targetId];
+
+      if (!settings?.drawable) {
+        return [current];
+      }
+
+      return safeRange(settings.drawable.min ?? current, settings.drawable.max ?? current);
+    }
+
+    return [current];
+  },
+  [compSettings, prSettings, hairSettings, currentDrawable],
+);
+
+const textureRange = useCallback(
+  (category: Category): number[] => {
+    const current = currentTexture(category);
+
+    if (category.type === 'hair') {
+      return safeRange(0, hairSettings?.texture?.max ?? current);
+    }
+
+    if (category.type === 'component' && category.targetId !== undefined) {
+      const settings = compSettings[category.targetId];
+
+      if (!settings?.texture) {
+        return [current];
+      }
+
+      return safeRange(0, settings.texture.max ?? current);
+    }
+
+    if (category.type === 'prop' && category.targetId !== undefined) {
+      const settings = prSettings[category.targetId];
+
+      if (!settings?.texture) {
+        return [current];
+      }
+
+      return safeRange(0, settings.texture.max ?? current);
+    }
+
+    return [current];
+  },
+  [compSettings, prSettings, hairSettings, currentTexture],
+);
 
   const currentTexture = useCallback(
     (category: Category) => {
