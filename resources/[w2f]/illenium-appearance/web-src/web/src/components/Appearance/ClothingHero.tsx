@@ -363,8 +363,26 @@ const Action = styled.button<{ tone?: 'primary' | 'ghost' | 'danger' }>`
   }
 `;
 
-const safeRange = (min = 0, max = 0) =>
-  Array.from({ length: Math.max(0, max - min + 1) }, (_, index) => min + index);
+const DRAG_CLICK_THRESHOLD = 18;
+
+const safeNumber = (value: unknown, fallback = 0) => {
+  const number = Number(value);
+  return Number.isFinite(number) ? number : fallback;
+};
+
+const safeRange = (min = 0, max = 0) => {
+  const safeMin = safeNumber(min, 0);
+  const safeMax = safeNumber(max, safeMin);
+
+  if (safeMax < safeMin) return [safeMin];
+
+  return Array.from({ length: Math.max(0, safeMax - safeMin + 1) }, (_, index) => safeMin + index);
+};
+
+const isEnabled = (value: unknown, fallback = true) => {
+  if (typeof value === 'boolean') return value;
+  return fallback;
+};
 
 const byComponentId = (items: PedComponent[]) =>
   items.reduce((result, item) => ({ ...result, [item.component_id]: item }), {} as Record<number, PedComponent>);
