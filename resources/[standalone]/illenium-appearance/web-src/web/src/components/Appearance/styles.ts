@@ -27,7 +27,8 @@ export const Container = styled.div`
   padding: 28px 12px 28px 24px;
 
   background:
-    linear-gradient(90deg, rgba(5, 5, 7, 0.94), rgba(5, 5, 7, 0.72) 76%, rgba(5, 5, 7, 0));
+    linear-gradient(90deg, rgba(5, 5, 7, 0.58), rgba(5, 5, 7, 0.28) 76%, rgba(5, 5, 7, 0));
+  backdrop-filter: blur(10px);
 
   overflow-y: scroll;
 

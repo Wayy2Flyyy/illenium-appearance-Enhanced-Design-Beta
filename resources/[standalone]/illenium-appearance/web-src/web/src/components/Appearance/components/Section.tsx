@@ -41,17 +41,17 @@ const Header = styled.div<HeaderProps>`
 
   z-index: 2;
 
-  border: 1px solid rgba(255, 255, 255, ${({ active }) => (active ? '0.18' : '0.08')});
+  border: 1px solid rgba(255, 255, 255, ${({ active }) => (active ? '0.2' : '0.1')});
   background:
-    linear-gradient(135deg, rgba(${props => props.theme.primaryBackground || '192, 28, 40'}, ${({ active }) => (active ? '0.38' : '0.1')}), rgba(${props => props.theme.secondaryBackground || '10, 10, 12'}, 0.82));
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.24);
-  backdrop-filter: blur(14px);
+    linear-gradient(135deg, rgba(${props => props.theme.primaryBackground || '192, 28, 40'}, ${({ active }) => (active ? '0.24' : '0.06')}), rgba(${props => props.theme.secondaryBackground || '10, 10, 12'}, 0.42));
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
+  backdrop-filter: blur(10px);
 
   transition: background 0.1s;
 
   &:hover {
     background:
-      linear-gradient(135deg, rgba(${props => props.theme.primaryBackground || '192, 28, 40'}, 0.45), rgba(${props => props.theme.secondaryBackground || '10, 10, 12'}, 0.88));
+      linear-gradient(135deg, rgba(${props => props.theme.primaryBackground || '192, 28, 40'}, 0.3), rgba(${props => props.theme.secondaryBackground || '10, 10, 12'}, 0.5));
     transition: background 0.12s, border-color 0.12s;
     border-color: rgba(${props => props.theme.primaryBackground || '192, 28, 40'}, 0.65);
     cursor: pointer;
@@ -61,11 +61,11 @@ const Header = styled.div<HeaderProps>`
     active &&
     css`
       background:
-        linear-gradient(135deg, rgba(${props => props.theme.primaryBackground || '192, 28, 40'}, 0.55), rgba(${props => props.theme.secondaryBackground || '10, 10, 12'}, 0.9));
+        linear-gradient(135deg, rgba(${props => props.theme.primaryBackground || '192, 28, 40'}, 0.34), rgba(${props => props.theme.secondaryBackground || '10, 10, 12'}, 0.52));
       &:hover {
         ${props => props.theme.smoothBackgroundTransition ? 'transition: background 0.2s;' : ''}
         background:
-          linear-gradient(135deg, rgba(${props => props.theme.primaryBackground || '192, 28, 40'}, 0.62), rgba(${props => props.theme.secondaryBackground || '10, 10, 12'}, 0.94));
+          linear-gradient(135deg, rgba(${props => props.theme.primaryBackground || '192, 28, 40'}, 0.4), rgba(${props => props.theme.secondaryBackground || '10, 10, 12'}, 0.58));
       }
     `}
 

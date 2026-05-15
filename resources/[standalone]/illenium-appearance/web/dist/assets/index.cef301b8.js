@@ -125,17 +125,17 @@ Error generating stack: `+i.message+`
 
   z-index: 2;
 
-  border: 1px solid rgba(255, 255, 255, ${({active:e})=>e?"0.18":"0.08"});
+  border: 1px solid rgba(255, 255, 255, ${({active:e})=>e?"0.2":"0.1"});
   background:
-    linear-gradient(135deg, rgba(${e=>e.theme.primaryBackground||"192, 28, 40"}, ${({active:e})=>e?"0.38":"0.1"}), rgba(${e=>e.theme.secondaryBackground||"10, 10, 12"}, 0.82));
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.24);
-  backdrop-filter: blur(14px);
+    linear-gradient(135deg, rgba(${e=>e.theme.primaryBackground||"192, 28, 40"}, ${({active:e})=>e?"0.24":"0.06"}), rgba(${e=>e.theme.secondaryBackground||"10, 10, 12"}, 0.42));
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
+  backdrop-filter: blur(10px);
 
   transition: background 0.1s;
 
   &:hover {
     background:
-      linear-gradient(135deg, rgba(${e=>e.theme.primaryBackground||"192, 28, 40"}, 0.45), rgba(${e=>e.theme.secondaryBackground||"10, 10, 12"}, 0.88));
+      linear-gradient(135deg, rgba(${e=>e.theme.primaryBackground||"192, 28, 40"}, 0.3), rgba(${e=>e.theme.secondaryBackground||"10, 10, 12"}, 0.5));
     transition: background 0.12s, border-color 0.12s;
     border-color: rgba(${e=>e.theme.primaryBackground||"192, 28, 40"}, 0.65);
     cursor: pointer;
@@ -143,11 +143,11 @@ Error generating stack: `+i.message+`
 
   ${({active:e})=>e&&rr`
       background:
-        linear-gradient(135deg, rgba(${t=>t.theme.primaryBackground||"192, 28, 40"}, 0.55), rgba(${t=>t.theme.secondaryBackground||"10, 10, 12"}, 0.9));
+        linear-gradient(135deg, rgba(${t=>t.theme.primaryBackground||"192, 28, 40"}, 0.34), rgba(${t=>t.theme.secondaryBackground||"10, 10, 12"}, 0.52));
       &:hover {
         ${t=>t.theme.smoothBackgroundTransition?"transition: background 0.2s;":""}
         background:
-          linear-gradient(135deg, rgba(${t=>t.theme.primaryBackground||"192, 28, 40"}, 0.62), rgba(${t=>t.theme.secondaryBackground||"10, 10, 12"}, 0.94));
+          linear-gradient(135deg, rgba(${t=>t.theme.primaryBackground||"192, 28, 40"}, 0.4), rgba(${t=>t.theme.secondaryBackground||"10, 10, 12"}, 0.58));
       }
     `}
 
@@ -645,7 +645,8 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
   padding: 28px 12px 28px 24px;
 
   background:
-    linear-gradient(90deg, rgba(5, 5, 7, 0.94), rgba(5, 5, 7, 0.72) 76%, rgba(5, 5, 7, 0));
+    linear-gradient(90deg, rgba(5, 5, 7, 0.58), rgba(5, 5, 7, 0.28) 76%, rgba(5, 5, 7, 0));
+  backdrop-filter: blur(10px);
 
   overflow-y: scroll;
 
