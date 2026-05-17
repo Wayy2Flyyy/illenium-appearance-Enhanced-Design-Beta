@@ -2,6 +2,21 @@ function CheckDuty()
     return not Config.OnDutyOnlyClothingRooms or (Config.OnDutyOnlyClothingRooms and client.job.onduty)
 end
 
+---Return true if the player's primary job name is allowed for this clothing room config.
+---@param room table
+---@param jobName string|nil
+---@return boolean
+function ClothingRoomJobMatches(room, jobName)
+    if not room or not jobName then return false end
+    if room.jobs then
+        for i = 1, #room.jobs do
+            if jobName == room.jobs[i] then return true end
+        end
+        return false
+    end
+    return jobName == (room.job or room.gang)
+end
+
 function IsPlayerAllowedForOutfitRoom(outfitRoom)
     local isAllowed = false
     local count = #outfitRoom.citizenIDs

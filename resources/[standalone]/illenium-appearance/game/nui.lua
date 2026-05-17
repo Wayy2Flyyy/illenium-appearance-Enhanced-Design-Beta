@@ -27,6 +27,13 @@ RegisterNUICallback("appearance_turn_around", function(_, cb)
     client.pedTurn(cache.ped, 180.0)
 end)
 
+RegisterNUICallback("appearance_rotate_ped", function(data, cb)
+    cb(1)
+    if data and data.delta then
+        SetEntityHeading(cache.ped, (GetEntityHeading(cache.ped) - data.delta) % 360.0)
+    end
+end)
+
 RegisterNUICallback("appearance_rotate_camera", function(direction, cb)
     cb(1)
     client.rotateCamera(direction)

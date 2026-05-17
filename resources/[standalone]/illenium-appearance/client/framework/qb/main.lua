@@ -2,12 +2,51 @@ if not Framework.QBCore() then return end
 
 local client = client
 
-local QBCore = exports["qb-core"]:GetCoreObject()
+local PlayerData = {
+    citizenid = nil,
+    job = { name = "unemployed", grade = { level = 0 }, onduty = false },
+    gang = { name = "none", grade = { level = 0 } },
+    charinfo = { gender = 0 },
+    metadata = {},
+}
 
-local PlayerData = QBCore.Functions.GetPlayerData()
+local function getQBCore()
+    return Framework.ResolveQBCoreObject()
+end
+
+local function syncPlayerData()
+    local core = getQBCore()
+    if not core then return end
+    local data = core.Functions.GetPlayerData()
+    if type(data) == "table" then
+        PlayerData = data
+    end
+end
+
+syncPlayerData()
+
+local function setClientParams()
+    client.job = PlayerData.job
+    client.gang = PlayerData.gang
+    client.citizenid = PlayerData.citizenid
+end
+
+setClientParams()
+
+CreateThread(function()
+    for _ = 1, 150 do
+        if getQBCore() then
+            syncPlayerData()
+            setClientParams()
+            return
+        end
+        Wait(200)
+    end
+end)
 
 local function getRankInputValues(rankList)
     local rankValues = {}
+    if not rankList then return rankValues end
     for k, v in pairs(rankList) do
         rankValues[#rankValues + 1] = {
             label = v.name,
@@ -17,30 +56,27 @@ local function getRankInputValues(rankList)
     return rankValues
 end
 
-local function setClientParams()
-    client.job = PlayerData.job
-    client.gang = PlayerData.gang
-    client.citizenid = PlayerData.citizenid
-end
-
 function Framework.GetPlayerGender()
-    if PlayerData.charinfo.gender == 1 then
+    if PlayerData.charinfo and PlayerData.charinfo.gender == 1 then
         return "Female"
     end
     return "Male"
 end
 
 function Framework.UpdatePlayerData()
-    PlayerData = QBCore.Functions.GetPlayerData()
+    syncPlayerData()
     setClientParams()
 end
 
 function Framework.HasTracker()
-    return QBCore.Functions.GetPlayerData().metadata["tracker"]
+    local pd = PlayerData
+    return pd.metadata and pd.metadata["tracker"]
 end
 
 function Framework.CheckPlayerMeta()
-    return PlayerData.metadata["isdead"] or PlayerData.metadata["inlaststand"] or PlayerData.metadata["ishandcuffed"]
+    local m = PlayerData.metadata
+    if not m then return false end
+    return m["isdead"] or m["inlaststand"] or m["ishandcuffed"]
 end
 
 function Framework.IsPlayerAllowed(citizenid)
@@ -48,19 +84,26 @@ function Framework.IsPlayerAllowed(citizenid)
 end
 
 function Framework.GetRankInputValues(type)
-    local grades = QBCore.Shared.Jobs[client.job.name].grades
+    local QBCore = getQBCore()
+    if not QBCore or not client.job or not client.gang then return {} end
+
+    local jobs = QBCore.Shared.Jobs
+    local gangs = QBCore.Shared.Gangs
+
+    local grades = jobs and jobs[client.job.name] and jobs[client.job.name].grades
     if type == "gang" then
-        grades = QBCore.Shared.Gangs[client.gang.name].grades
+        grades = gangs and gangs[client.gang.name] and gangs[client.gang.name].grades
     end
-    return getRankInputValues(grades)
+
+    return getRankInputValues(grades or {})
 end
 
 function Framework.GetJobGrade()
-    return client.job.grade.level
+    return client.job and client.job.grade and client.job.grade.level or 0
 end
 
 function Framework.GetGangGrade()
-    return client.gang.grade.level
+    return client.gang and client.gang.grade and client.gang.grade.level or 0
 end
 
 RegisterNetEvent("QBCore:Client:OnJobUpdate", function(JobInfo)
@@ -83,12 +126,17 @@ RegisterNetEvent("QBCore:Client:SetDuty", function(duty)
 end)
 
 RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
+    Framework.UpdatePlayerData()
     InitAppearance()
 end)
 
 RegisterNetEvent("qb-clothes:client:CreateFirstCharacter", function()
+    local QBCore = getQBCore()
+    if not QBCore then return end
     QBCore.Functions.GetPlayerData(function(pd)
-        PlayerData = pd
+        if type(pd) == "table" then
+            PlayerData = pd
+        end
         setClientParams()
         InitializeCharacter(Framework.GetGender(true))
     end)

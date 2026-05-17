@@ -79,9 +79,11 @@ local function getPedHeadBlend(ped)
     -- GET_PED_HEAD_BLEND_DATA
     local shapeFirst, shapeSecond, shapeThird, skinFirst, skinSecond, skinThird, shapeMix, skinMix, thirdMix = Citizen.InvokeNative(0x2746BD9D88C5C5D0, ped, Citizen.PointerValueIntInitialized(0), Citizen.PointerValueIntInitialized(0), Citizen.PointerValueIntInitialized(0), Citizen.PointerValueIntInitialized(0), Citizen.PointerValueIntInitialized(0), Citizen.PointerValueIntInitialized(0), Citizen.PointerValueFloatInitialized(0), Citizen.PointerValueFloatInitialized(0), Citizen.PointerValueFloatInitialized(0))
 
+    if not shapeMix then shapeMix = 0 end
     shapeMix = tonumber(string.sub(shapeMix, 0, 4))
     if shapeMix > 1 then shapeMix = 1 end
 
+    if not skinMix then skinMix = 0 end
     skinMix = tonumber(string.sub(skinMix, 0, 4))
     if skinMix > 1 then skinMix = 1 end
 
@@ -350,7 +352,7 @@ local function setPreviewTattoo(ped, tattoos, tattoo)
 
     ClearPedDecorations(ped)
     for _ = 1, (tattoo.opacity or 0.1) * 10 do
-        AddPedDecorationFromHashes(ped, joaat(tattoo.collection), tattooGender)
+        AddPedDecorationFromHashes(ped, joaat(tattoo.collection), joaat(tattooGender))
     end
     for k in pairs(tattoos) do
         for i = 1, #tattoos[k] do

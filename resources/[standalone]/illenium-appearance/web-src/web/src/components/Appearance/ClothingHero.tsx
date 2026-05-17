@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
 
+import Nui from '../../Nui';
 import CameraAngleRail from './CameraAngleRail';
 import {
   ComponentConfig,
@@ -60,6 +61,38 @@ const Layer = styled.div`
   position: absolute;
   inset: 0;
   pointer-events: none;
+`;
+
+const SpinZone = styled.div<{ $active: boolean }>`
+  position: absolute;
+  top: 80px;
+  bottom: 340px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(480px, 48vw);
+  pointer-events: auto;
+  cursor: ${({ $active }) => ($active ? 'grabbing' : 'grab')};
+  user-select: none;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 10px;
+`;
+
+const SpinHint = styled.span`
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(240, 242, 248, 0.22);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+  pointer-events: none;
+  user-select: none;
+  transition: color 0.2s;
+
+  ${SpinZone}:hover & {
+    color: rgba(240, 242, 248, 0.45);
+  }
 `;
 
 /** Top chrome: category pills centered with ‹ › scroll arrows. */
@@ -678,6 +711,32 @@ const ClothingHero = ({
     updateCategoryScrollHints();
   }, [updateCategoryScrollHints]);
 
+  // Manual ped-rotation drag state.
+  const spinDrag = useRef({ active: false, lastX: 0 });
+  const [spinActive, setSpinActive] = useState(false);
+
+  const onSpinPointerDown = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
+    spinDrag.current = { active: true, lastX: e.clientX };
+    setSpinActive(true);
+    try { (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId); } catch { /* CEF may reject */ }
+  }, []);
+
+  const onSpinPointerMove = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
+    if (!spinDrag.current.active) return;
+    const dx = e.clientX - spinDrag.current.lastX;
+    spinDrag.current.lastX = e.clientX;
+    if (dx !== 0) {
+      Nui.post('appearance_rotate_ped', { delta: dx * 0.8 });
+    }
+  }, []);
+
+  const onSpinEnd = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
+    if (!spinDrag.current.active) return;
+    spinDrag.current.active = false;
+    setSpinActive(false);
+    try { (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId); } catch { /* noop */ }
+  }, []);
+
   // Drag state for the carousel.
   const stripRef = useRef<HTMLDivElement>(null);
   const innerRef = useRef<HTMLDivElement>(null);
@@ -879,6 +938,16 @@ const ClothingHero = ({
   return (
     <Layer>
       <CameraAngleRail cameraPreset={cameraPreset} onSelect={onCameraPreset} />
+
+      <SpinZone
+        $active={spinActive}
+        onPointerDown={onSpinPointerDown}
+        onPointerMove={onSpinPointerMove}
+        onPointerUp={onSpinEnd}
+        onPointerCancel={onSpinEnd}
+      >
+        <SpinHint>↺ drag to rotate</SpinHint>
+      </SpinZone>
 
       <CategoryTopChrome>
         <ScrollArrowRound

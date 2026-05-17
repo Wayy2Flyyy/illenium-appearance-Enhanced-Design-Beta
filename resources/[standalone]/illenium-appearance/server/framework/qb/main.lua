@@ -1,8 +1,16 @@
 if not Framework.QBCore() then return end
 
-local QBCore = exports["qb-core"]:GetCoreObject()
+CreateThread(function()
+    for _ = 1, 150 do
+        if Framework.ResolveQBCoreObject() then return end
+        Wait(200)
+    end
+    lib.print.warn("[illenium-appearance] QB-compat object unavailable after 30s. Enable qbx:enableBridge true or ensure qb-core is running.")
+end)
 
 function Framework.GetPlayerID(src)
+    local QBCore = Framework.ResolveQBCoreObject()
+    if not QBCore then return end
     local Player = QBCore.Functions.GetPlayer(src)
     if Player then
         return Player.PlayerData.citizenid
@@ -10,22 +18,30 @@ function Framework.GetPlayerID(src)
 end
 
 function Framework.HasMoney(src, type, money)
-    local Player = QBCore.Functions.GetPlayer(src)
+    local QBCore = Framework.ResolveQBCoreObject()
+    local Player = QBCore and QBCore.Functions.GetPlayer(src)
+    if not Player or not Player.PlayerData.money then return false end
     return Player.PlayerData.money[type] >= money
 end
 
 function Framework.RemoveMoney(src, type, money)
-    local Player = QBCore.Functions.GetPlayer(src)
+    local QBCore = Framework.ResolveQBCoreObject()
+    local Player = QBCore and QBCore.Functions.GetPlayer(src)
+    if not Player then return false end
     return Player.Functions.RemoveMoney(type, money)
 end
 
 function Framework.GetJob(src)
-    local Player = QBCore.Functions.GetPlayer(src)
+    local QBCore = Framework.ResolveQBCoreObject()
+    local Player = QBCore and QBCore.Functions.GetPlayer(src)
+    if not Player then return end
     return Player.PlayerData.job
 end
 
 function Framework.GetGang(src)
-    local Player = QBCore.Functions.GetPlayer(src)
+    local QBCore = Framework.ResolveQBCoreObject()
+    local Player = QBCore and QBCore.Functions.GetPlayer(src)
+    if not Player then return end
     return Player.PlayerData.gang
 end
 

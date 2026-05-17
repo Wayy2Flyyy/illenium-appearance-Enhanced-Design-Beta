@@ -58,8 +58,8 @@ local function onClothingRoomEnter(data)
     local index = lookupZoneIndexFromID(Zones.ClothingRoom, data.id)
     local clothingRoom = Config.ClothingRooms[index]
 
-    local jobName = clothingRoom.job and client.job.name or client.gang.name
-    if jobName == (clothingRoom.job or clothingRoom.gang) then
+    local jobName = (clothingRoom.job or clothingRoom.jobs) and client.job.name or client.gang.name
+    if ClothingRoomJobMatches(clothingRoom, jobName) then
         if CheckDuty() or clothingRoom.gang then
             currentZone = {
                 name = "clothingRoom",
@@ -151,7 +151,7 @@ local function ZonesLoop()
             if IsControlJustReleased(0, 38) then
                 if currentZone.name == "clothingRoom" then
                     local clothingRoom = Config.ClothingRooms[currentZone.index]
-                    local outfits = GetPlayerJobOutfits(clothingRoom.job)
+                    local outfits = GetPlayerJobOutfits((clothingRoom.job or clothingRoom.jobs) and true or false)
                     TriggerEvent("illenium-appearance:client:openJobOutfitsMenu", outfits)
                 elseif currentZone.name == "playerOutfitRoom" then
                     local outfitRoom = Config.PlayerOutfitRooms[currentZone.index]
@@ -187,7 +187,7 @@ end)
 
 RegisterNetEvent("illenium-appearance:client:OpenClothingRoom", function()
     local clothingRoom = Config.ClothingRooms[currentZone.index]
-    local outfits = GetPlayerJobOutfits(clothingRoom.job)
+    local outfits = GetPlayerJobOutfits((clothingRoom.job or clothingRoom.jobs) and true or false)
     TriggerEvent("illenium-appearance:client:openJobOutfitsMenu", outfits)
 end)
 

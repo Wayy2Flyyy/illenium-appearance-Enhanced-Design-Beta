@@ -419,17 +419,15 @@ const Appearance = () => {
     return false
   }, [data]);
 
-  const filterTattoos = (tattooSettings: TattoosSettings) => {
-    for(const zone in tattooSettings.items) {
-      tattooSettings.items[zone] = tattooSettings.items[zone].filter(tattoo => {
-        if(isPedMale && tattoo.hashMale !== "") {
-          return tattoo;
-        } else if(!isPedMale && tattoo.hashFemale !== "") {
-          return tattoo;
-        }
-      })
+  const filterTattoos = (tattooSettings: TattoosSettings): TattoosSettings => {
+    const filteredItems: TattoosSettings['items'] = {};
+    for (const zone in tattooSettings.items) {
+      filteredItems[zone] = tattooSettings.items[zone].filter(tattoo => {
+        if (isPedMale) return tattoo.hashMale !== '';
+        return tattoo.hashFemale !== '';
+      });
     }
-    return tattooSettings;
+    return { ...tattooSettings, items: filteredItems };
   };
 
   const handleApplyTattoo = useCallback(
@@ -462,9 +460,8 @@ const Appearance = () => {
     async (tattoo: Tattoo) => {
       if (!data) return;
       const { tattoos } = data;
-      const updatedTattoos = tattoos;
-      // eslint-disable-next-line prettier/prettier
-      updatedTattoos[tattoo.zone] = updatedTattoos[tattoo.zone].filter(tattooDelete => tattooDelete.name !== tattoo.name);
+      const updatedTattoos = JSON.parse(JSON.stringify(tattoos));
+      updatedTattoos[tattoo.zone] = updatedTattoos[tattoo.zone].filter((tattooDelete: Tattoo) => tattooDelete.name !== tattoo.name);
       await Nui.post('appearance_delete_tattoo', updatedTattoos);
       setData({ ...data, tattoos: updatedTattoos });
     },
@@ -518,7 +515,7 @@ const Appearance = () => {
       const result = await Nui.post('appearance_get_settings');
       setAppearanceSettings(result.appearanceSettings);
     }
-  }, []);
+  }, [appearanceSettings]);
 
   useEffect(() => {
     if (display.appearance) {
