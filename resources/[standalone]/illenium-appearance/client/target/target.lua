@@ -117,8 +117,15 @@ end
 local function SetupClothingRoomTargets()
     for k, v in pairs(Config.ClothingRooms) do
         local targetConfig = Config.TargetConfig["clothingroom"]
+        local jobGroup = v.job
+        if v.jobs then
+            jobGroup = {}
+            for i = 1, #v.jobs do
+                jobGroup[v.jobs[i]] = 0
+            end
+        end
         local action = function()
-            local outfits = GetPlayerJobOutfits(v.job)
+            local outfits = GetPlayerJobOutfits((v.job or v.jobs) and true or false)
             TriggerEvent("illenium-appearance:client:openJobOutfitsMenu", outfits)
         end
 
@@ -128,15 +135,15 @@ local function SetupClothingRoomTargets()
                 action = action,
                 icon = targetConfig.icon,
                 label = targetConfig.label,
-                canInteract = v.job and CheckDuty or nil,
-                job = v.job,
+                canInteract = (v.job or v.jobs) and CheckDuty or nil,
+                job = jobGroup,
                 gang = v.gang
             }},
             distance = targetConfig.distance,
             rotation = v.rotation
         }
 
-        local key = "clothing_" .. (v.job or v.gang) .. k
+        local key = "clothing_" .. (v.job or v.gang or table.concat(v.jobs or {}, "_")) .. k
         if Config.EnablePedsForClothingRooms then
             TargetPeds.ClothingRoom[k] = CreatePedAtCoords(v.targetModel or targetConfig.model, v.coords, v.targetScenario or targetConfig.scenario)
             Target.AddTargetEntity(TargetPeds.ClothingRoom[k], parameters)

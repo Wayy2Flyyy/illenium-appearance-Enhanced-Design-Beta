@@ -51,6 +51,7 @@ client_scripts {
 
 server_scripts {
   "@oxmysql/lib/MySQL.lua",
+  "server/database/schema_bootstrap.lua",
   "server/database/database.lua",
   "server/database/jobgrades.lua",
   "server/database/managementoutfits.lua",
@@ -79,6 +80,7 @@ shared_scripts {
   "shared/tattoos.lua",
   "shared/theme.lua",
   "shared/framework/framework.lua",
+  "shared/framework/qb_core_compat.lua",
   "shared/framework/esx/util.lua",
   "locales/locales.lua",
   "locales/ar.lua",

@@ -1,7 +1,6 @@
 import { useCallback, useRef } from 'react';
 import styled from 'styled-components';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
-import { valueContainerCSS } from 'react-select/src/components/containers';
 
 interface InputProps {
   title?: string;

@@ -566,7 +566,7 @@ Config.Stores = {
 
 Config.ClothingRooms = {
     {
-        job = "police",
+        jobs = { 'lspd', 'bcso', 'sast', 'sapr' },
         coords = vector4(454.91, -990.89, 30.69, 193.4),
         size = vector3(4, 4, 4),
         rotation = 45,
@@ -606,7 +606,7 @@ Config.PlayerOutfitRooms = {
 }
 
 Config.Outfits = {
-    ["police"] = {
+    ['lspd'] = {
         ["Male"] = {
             {
                 name = "Short Sleeve",
@@ -943,6 +943,12 @@ Config.Outfits = {
         }
     }
 }
+
+if Config.Outfits['lspd'] then
+    Config.Outfits['bcso'] = Config.Outfits['lspd']
+    Config.Outfits['sast'] = Config.Outfits['lspd']
+    Config.Outfits['sapr'] = Config.Outfits['lspd']
+end
 
 Config.InitialPlayerClothes = {
     Male = {
